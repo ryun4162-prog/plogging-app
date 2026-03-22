@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Plog & Go</title>
+
+<style>
+body{
+    margin:0;
+    font-family: 'Arial', sans-serif;
+    background:#f2f4f3;
+}
+
+/* 전체 화면 */
+.screen{
+    display:none;
+    height:100vh;
+    text-align:center;
+    padding:30px 20px;
+}
+
+.active{
+    display:block;
+}
+
+/* 로고 */
+.logo{
+    font-size:32px;
+    font-weight:bold;
+    color:#2e7d32;
+    margin-top:20px;
+}
+
+/* 버튼 */
+.main-btn{
+    width:90%;
+    padding:18px;
+    font-size:18px;
+    border:none;
+    border-radius:12px;
+    color:white;
+    background:linear-gradient(#4CAF50,#2e7d32);
+    margin-top:30px;
+}
+
+.finish-btn{
+    background:linear-gradient(#ff4d4d,#c62828);
+}
+
+/* 박스 */
+.box{
+    display:flex;
+    justify-content:space-around;
+    margin-top:30px;
+}
+
+.stat{
+    width:40%;
+    padding:20px;
+    border-radius:12px;
+    color:white;
+    font-size:22px;
+}
+
+.time{
+    background:#2196F3;
+}
+
+.trash{
+    background:#43A047;
+}
+
+/* 결과 */
+.result-title{
+    font-size:28px;
+    margin-top:40px;
+}
+
+.result-box{
+    margin-top:30px;
+    font-size:20px;
+}
+
+.medal{
+    font-size:70px;
+    margin-top:30px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 홈 화면 -->
+<div id="home" class="screen active">
+
+<div class="logo">Plog & Go</div>
+<p>한강을 지키는 러닝 앱</p>
+
+<button class="main-btn" onclick="start()">플로깅 시작하기</button>
+
+</div>
+
+<!-- 진행 화면 -->
+<div id="run" class="screen">
+
+<h2>플로깅 진행 중...</h2>
+
+<div class="box">
+<div class="stat time">
+시간<br><span id="time">00</span>
+</div>
+
+<div class="stat trash">
+쓰레기<br><span id="trash">0</span>개
+</div>
+</div>
+
+<button class="main-btn" onclick="addTrash()">쓰레기 1개 추가</button>
+
+<button class="main-btn finish-btn" onclick="finish()">완료하기</button>
+
+</div>
+
+<!-- 결과 화면 -->
+<div id="result" class="screen">
+
+<div class="result-title">오늘의 결과</div>
+
+<div class="result-box">
+플로깅 시간 : <span id="finalTime"></span>초<br><br>
+주운 쓰레기 : <span id="finalTrash"></span>개
+</div>
+
+<div class="medal">🏅</div>
+
+<button class="main-btn" onclick="restart()">다시 시작</button>
+
+</div>
+
+<script>
+let time = 0;
+let trash = 0;
+let timer;
+
+function start(){
+    document.getElementById("home").classList.remove("active");
+    document.getElementById("run").classList.add("active");
+
+    timer = setInterval(()=>{
+        time++;
+        document.getElementById("time").innerText = time;
+    },1000);
+}
+
+function addTrash(){
+    trash++;
+    document.getElementById("trash").innerText = trash;
+}
+
+function finish(){
+    clearInterval(timer);
+
+    document.getElementById("run").classList.remove("active");
+    document.getElementById("result").classList.add("active");
+
+    document.getElementById("finalTime").innerText = time;
+    document.getElementById("finalTrash").innerText = trash;
+}
+
+function restart(){
+    location.reload();
+}
+</script>
+
+</body>
+</html>
